@@ -26,7 +26,7 @@ const Timeline = () => {
     return (
         <Wrapper>
             <Head title={'Home'} />
-            <NewPost />
+            <NewPost setPosts={setPosts} />
             <div className="mb-4">
             {
                 posts.map((post, i) => {

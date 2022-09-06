@@ -3,8 +3,6 @@ import logo from '../../assets/images/logo.svg'
 import classes from './Menu.module.css'
 import { Home, Person, Mail, Explore, Bookmarks, ViewList, Lock } from '@mui/icons-material';
 
-
-
 const Menu = () => {
     const links = [
         {

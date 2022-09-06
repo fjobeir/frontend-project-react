@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { useContext, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import { Favorite, FavoriteBorder, ChatBubbleOutline } from '@mui/icons-material'
 import './Post.css'
 import { AuthContext } from '../../contexts/AuthContext'
@@ -8,13 +8,15 @@ import { AuthContext } from '../../contexts/AuthContext'
 dayjs.extend(relativeTime)
 
 const Post = ({post}) => {
+    const newCommentRef = useRef()
     const { token } = useContext(AuthContext)
     const [liked, setLiked] = useState(post?.liked_by_current_user)
     const [detailed, setDetailed] = useState(false)
     const [details, setDetails] = useState(post)
+    const [loading, setLoading] = useState(false)
 
-    const likePost = async (id) => {
-        const response = await fetch(`${process.env.REACT_APP_API}/posts/like`, {
+    const likeUnlike = async (id, todo, liked) => {
+        const response = await fetch(`${process.env.REACT_APP_API}/posts/${todo}`, {
             method: 'post',
             body: JSON.stringify({
                 post_id: id
@@ -26,25 +28,16 @@ const Post = ({post}) => {
         })
         const json = await response.json()
         if (json.success) {
-            setLiked(true)
+            setLiked(liked)
         }
+    }
+    const likePost = async (id) => {
+        likeUnlike(id, 'like', true)
     }
     const unlikePost = async (id) => {
-        const response = await fetch(`${process.env.REACT_APP_API}/posts/unlike`, {
-            method: 'post',
-            body: JSON.stringify({
-                post_id: id
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        const json = await response.json()
-        if (json.success) {
-            setLiked(false)
-        }
+        likeUnlike(id, 'unlike', false)
     }
+
     const loadDetails = async (id) => {
         const response = await fetch(`${process.env.REACT_APP_API}/posts/${id}`, {
             headers: {
@@ -56,6 +49,32 @@ const Post = ({post}) => {
             setDetailed(true)
             setDetails(json.data)
         }
+    }
+
+    const addComment = async (id) => {
+        setLoading(true)
+        const response = await fetch(`${process.env.REACT_APP_API}/comments`, {
+            method: 'post',
+            body: JSON.stringify({
+                post_id: id,
+                content: newCommentRef.current.value
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        const json = await response.json()
+        if (!json?.success) {
+            window.alert(json?.messages.join(', '))
+        } else {
+            newCommentRef.current.value = ''
+            setDetails({
+                ...details,
+                comments: [...details.comments, json.data]
+            })
+        }
+        setLoading(false)
     }
 
     return (
@@ -80,9 +99,9 @@ const Post = ({post}) => {
                 detailed && (
                     <>
                         <div className='comments'>
-                            {details?.comments.map((comment, i) => {
+                            {details.comments?.map((comment, i) => {
                                 return (
-                                    <div className='comment'>
+                                    <div className='comment' key={i}>
                                         <img src={comment?.user?.avatar} alt={comment?.user?.name} />
                                         <div>
                                             <div className='name'>{comment?.user?.name}</div>
@@ -95,10 +114,10 @@ const Post = ({post}) => {
                             <div className='container-fluid addcomment'>
                                 <div className='row'>
                                     <div className='col-9 ps-0'>
-                                        <input type='text' className='form-control' placeholder='Add a new comment' />
+                                        <input type='text' ref={newCommentRef} className='form-control' placeholder='Add a new comment' />
                                     </div>
                                     <div className='col-3 p-0'>
-                                        <button className='btn btn-primary w-100'>
+                                        <button disabled={loading} className='btn btn-primary w-100' onClick={() => {addComment(post.id)}}>
                                             <small>Add</small>
                                         </button>
                                     </div>

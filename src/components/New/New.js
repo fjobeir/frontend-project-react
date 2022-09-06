@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../contexts/AuthContext'
 import './NewPost.css'
 
-const NewPost = () => {
+const NewPost = ({setPosts}) => {
     const { user, token } = useContext(AuthContext)
     const newPost = useRef()
     const navigate = useNavigate()
@@ -22,9 +22,11 @@ const NewPost = () => {
         })
         const json = await response.json()
         setLoading(false)
-        window.alert(json.messages.join(', '))
-        if (json.success) {
-            navigate('/')
+        if (json?.success) {
+            setPosts((posts) => [json.data, ...posts])
+            newPost.current.value = ''
+        } else {
+            window.alert(json?.messages?.join(', '))
         }
     }
     return (

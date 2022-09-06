@@ -35,3 +35,14 @@ nav {
     margin-bottom: 5px;
     margin-top: 20px;
 }
+@media screen and (max-width: 992px) {
+    nav {
+        margin-left: 10px;
+        width: 210px;
+    }
+}
+@media screen and (max-width: 768px) {
+    nav {
+        display: none;
+    }
+}

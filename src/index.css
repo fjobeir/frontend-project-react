@@ -8,7 +8,6 @@ ul {
 }
 body {
 	display: flex;
-    justify-content: center;
     flex-direction: column;
 	min-height: 100vh;
 }
@@ -17,4 +16,13 @@ img {
 }
 .form-field label {
 	font-size: 1.2em;
+}
+.bottom-border {
+	border-bottom: 1px solid #F3F4F5;
+}
+.hide-extra {
+	display: inline-block;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
 }
