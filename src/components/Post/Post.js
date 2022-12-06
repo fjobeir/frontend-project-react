@@ -29,6 +29,10 @@ const Post = ({post}) => {
         const json = await response.json()
         if (json.success) {
             setLiked(liked)
+            setDetails({
+                ...details,
+                likes_count: json.data.likes_count
+            })
         }
     }
     const likePost = async (id) => {
@@ -71,7 +75,8 @@ const Post = ({post}) => {
             newCommentRef.current.value = ''
             setDetails({
                 ...details,
-                comments: [...details.comments, json.data]
+                comments: [...details.comments, json.data],
+                comments_count: parseInt(details.comments_count) + 1
             })
         }
         setLoading(false)
@@ -86,12 +91,16 @@ const Post = ({post}) => {
                     <div className='mb-2 datetime'>{dayjs().to(dayjs(post?.created_at))}</div>
                     <p>{post.content}</p>
                     <div className='icons d-flex align-items-center'>
-                        <div className='me-2'>
+                        <div className='me-3 border rounded border bg-light py-1 px-2 d-flex align-items-center'>
                         {liked ? 
                             <Favorite color='error' onClick={() => {unlikePost(post.id)}} /> : 
                             <FavoriteBorder onClick={() => likePost(post.id)} /> }
+                            <div className='ms-2 fw-bolder'>{details.likes_count}</div>
                         </div>
-                        <ChatBubbleOutline onClick={() => {loadDetails(post.id)}} />
+                        <div className='border rounded border bg-light py-1 px-2 d-flex align-items-center'>
+                            <ChatBubbleOutline onClick={() => {loadDetails(post.id)}} />
+                            <div className='ms-2 fw-bolder'>{details.comments_count}</div>
+                        </div>
                     </div>
                 </div>
             </div>

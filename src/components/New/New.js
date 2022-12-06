@@ -1,12 +1,10 @@
 import { useContext, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../contexts/AuthContext'
 import './NewPost.css'
 
 const NewPost = ({setPosts}) => {
     const { user, token } = useContext(AuthContext)
     const newPost = useRef()
-    const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const createPost = async () => {
         setLoading(true)

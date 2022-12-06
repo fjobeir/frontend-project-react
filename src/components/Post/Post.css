@@ -9,6 +9,7 @@
 }
 .postContent {
     display: flex;
+    overflow: hidden;
 }
 .post img {
     width: 40px;
@@ -25,6 +26,8 @@
 }
 .post p {
     margin-bottom: 10px;
+    overflow: hidden;
+    max-width: 100%;
 }
 .comments {
     margin: 15px 15px 15px 55px;

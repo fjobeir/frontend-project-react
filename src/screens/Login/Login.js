@@ -46,11 +46,11 @@ const Login = () => {
                             <label htmlFor='password' className='mb-2'>Password</label>
                             <input type='password' ref={passwordRef} id="password" className='form-control' />
                         </div>
-                        <div className='row mt-5'>
-                            <div className='col-6'>
-                                <Link className='btn btn-dark w-100' to='/register'>Create Account</Link>
+                        <div className='row mt-5 align-items-center'>
+                            <div className='col-5'>
+                                <Link className='' to='/register'>Register</Link>
                             </div>
-                            <div className='col-6'>
+                            <div className='col-7'>
                                 <button
                                     className='btn btn-primary w-100'
                                     disabled={loading}

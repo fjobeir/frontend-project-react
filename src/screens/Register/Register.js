@@ -55,11 +55,11 @@ const Register = () => {
                             <label htmlFor='password_confirmation' className='mb-2'>Password Confirmation</label>
                             <input type='password' ref={passwordConfirmationRef} id="password_confirmation" className='form-control' />
                         </div>
-                        <div className='row mt-5'>
-                            <div className='col-6'>
-                                <Link className='btn btn-dark w-100' to='/login'>Go To Login</Link>
+                        <div className='row mt-5 align-items-center'>
+                            <div className='col-5'>
+                                <Link className='w-100' to='/login'>Login</Link>
                             </div>
-                            <div className='col-6'>
+                            <div className='col-7'>
                                 <button
                                     className='btn btn-primary w-100'
                                     disabled={loading}
