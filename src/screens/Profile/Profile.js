@@ -112,7 +112,7 @@ const Profile = () => {
                         <label htmlFor='password_confirmation' className='mb-2'><small>New Password Confirmation</small></label>
                         <input name="new_password_confirmation" type='password' id="password_confirmation" className='form-control' />
                     </div>
-                    {/* <input type='hidden' name='_method' value='put' /> */}
+                    <input type='hidden' name='_method' value='put' />
                     <div className='form-field mb-3'>
                         <button disabled={loading} type='submit' className="btn btn-primary">Update Profile</button>
                     </div>
