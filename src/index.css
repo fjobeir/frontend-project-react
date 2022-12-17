@@ -14,9 +14,6 @@ body {
 img {
 	max-width: 100%;
 }
-.form-field label {
-	font-size: 1.2em;
-}
 .bottom-border {
 	border-bottom: 1px solid #F3F4F5;
 }

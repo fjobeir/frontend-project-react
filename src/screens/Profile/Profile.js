@@ -101,7 +101,7 @@ const Profile = () => {
                         <input value={currentUser?.email} name="email" onChange={(e) => { onChangeHandler(e, { email: e.target.value }) }} type='email' id="email" className='form-control' />
                     </div>
                     <div className='form-field mb-3'>
-                        <label htmlFor='password' className='mb-2'><small>Password</small></label>
+                        <label htmlFor='password' className='mb-2'><small>Password <span className="text-danger">*</span></small></label>
                         <input name="password" type='password' id="password" className='form-control' />
                     </div>
                     <div className='form-field mb-3'>
